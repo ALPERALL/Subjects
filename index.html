@@ -196,7 +196,6 @@
       from{opacity:0;transform:scale(0.78) translateY(18px);}
       to{opacity:1;transform:none;}
     }
-    /* slow breathing animation on hero logo */
     .hero-logo-wrap svg{
       animation:breathe 5s ease-in-out infinite alternate;
     }
@@ -319,7 +318,6 @@
 <!-- ══════════════ WELCOME SPLASH ══════════════ -->
 <div id="splash">
   <div class="splash-logo">
-    <!-- AA Hexagon Logo -->
     <svg width="96" height="96" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
       <defs>
         <linearGradient id="sg" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -405,7 +403,7 @@
     <button class="nav-logout" onclick="logout()">Çıkış Yap</button>
   </nav>
 
-  <!-- HERO — logo only, no name text -->
+  <!-- HERO -->
   <div class="hero" id="hero">
     <div class="hero-glow"></div>
     <div class="hero-ring"></div>
@@ -424,15 +422,10 @@
               <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
             </filter>
           </defs>
-          <!-- outer ring -->
           <polygon points="50,1 98,25.5 98,74.5 50,99 2,74.5 2,25.5" fill="none" stroke="url(#hlg)" stroke-width="1.8" opacity="0.95" filter="url(#hf)"/>
-          <!-- mid ring -->
           <polygon points="50,13 86,32 86,68 50,87 14,68 14,32" fill="none" stroke="url(#hlg)" stroke-width="0.8" opacity="0.25"/>
-          <!-- inner ring -->
           <polygon points="50,25 74,38.5 74,61.5 50,75 26,61.5 26,38.5" fill="none" stroke="url(#hlg)" stroke-width="0.5" opacity="0.12"/>
-          <!-- AA text -->
           <text x="50" y="61" text-anchor="middle" font-family="Cinzel,serif" font-weight="900" font-size="24" fill="url(#hlg)" filter="url(#hf)">AA</text>
-          <!-- corner dots -->
           <circle cx="50" cy="1" r="3" fill="#fff" opacity="0.95"/>
           <circle cx="98" cy="25.5" r="3" fill="#bbb" opacity="0.85"/>
           <circle cx="98" cy="74.5" r="3" fill="#bbb" opacity="0.85"/>
@@ -494,25 +487,25 @@
     <div class="section-title reveal">Dosyalarım</div>
     <div class="section-divider reveal"></div>
     <div class="files-grid reveal">
-<div class="file-card">
-  <div class="file-icon">📄</div>
-  <div class="file-name">İnsüline Bağlı Diyabet</div>
-  <div class="file-desc">Tip 1 diyabet, insülin direnci ve tedavi yöntemlerine ilişkin araştırma belgesi.</div>
-  <div class="file-meta">
-    <span class="file-tag">PDF</span>
-    <span class="file-tag">Biyoloji</span>
-    <!-- 🔁 YENİ SEKME DE AÇAN SADE BAĞLANTI -->
-    <a class="download-btn" 
-       href="https://github.com/ALPERALL/Subjects/raw/refs/heads/main/%C4%B0ns%C3%BCline%20Ba%C4%9Fl%C4%B1%20Diyabet.pdf" 
-       target="_blank" 
-       rel="noopener noreferrer">
-      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
-        <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2M7 10l5 5 5-5M12 4v11"/>
-      </svg>
-      Görüntüle
-    </a>
-  </div>
-</div>
+      <div class="file-card">
+        <div class="file-icon">📄</div>
+        <div class="file-name">İnsüline Bağlı Diyabet</div>
+        <div class="file-desc">Tip 1 diyabet, insülin direnci ve tedavi yöntemlerine ilişkin araştırma belgesi.</div>
+        <div class="file-meta">
+          <span class="file-tag">PDF</span>
+          <span class="file-tag">Biyoloji</span>
+          <!-- 📌 DOĞRUDAN YENİ SEKME DE AÇAN BAĞLANTI -->
+          <a class="download-btn" 
+             href="https://github.com/ALPERALL/Subjects/raw/refs/heads/main/%C4%B0ns%C3%BCline%20Ba%C4%9Fl%C4%B1%20Diyabet.pdf" 
+             target="_blank" 
+             rel="noopener noreferrer">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2M7 10l5 5 5-5M12 4v11"/>
+            </svg>
+            Görüntüle
+          </a>
+        </div>
+      </div>
       <div class="file-card" style="border-style:dashed;opacity:0.28;cursor:default;">
         <div class="file-icon" style="font-size:0.95rem;">＋</div>
         <div class="file-name" style="color:var(--text-2);">Yakında...</div>
@@ -607,33 +600,6 @@
       });
     }, { threshold: 0.1 });
     document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
-  }
-
-  /* ─── GÜVENİLİR İNDİRME (TELEFON DOSTU) ─── */
-  async function downloadFile(event, url, filename) {
-    event.preventDefault(); // href="#" olmasına rağmen sayfa başına kaymayı engeller
-
-    try {
-      // Fetch ile dosyayı al
-      const response = await fetch(url);
-      if (!response.ok) throw new Error('Dosya alınamadı');
-
-      const blob = await response.blob();
-      const blobUrl = URL.createObjectURL(blob);
-
-      // Görünmez bir a elementi oluşturup tıklat
-      const a = document.createElement('a');
-      a.href = blobUrl;
-      a.download = filename;
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-      URL.revokeObjectURL(blobUrl);
-    } catch (error) {
-      console.warn('Fetch ile indirme başarısız, yeni sekmede açılıyor:', error);
-      // Fallback: dosyayı yeni sekmede aç (kullanıcı oradan indirebilir)
-      window.open(url, '_blank');
-    }
   }
 
   /* shake keyframe */
